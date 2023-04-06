@@ -399,7 +399,7 @@
       <set>Qt::AlignCenter</set>
      </property>
     </widget>
-    <widget class="QLabel" name="parametr_pH_3">
+    <widget class="QLabel" name="parametr_pH_V1">
      <property name="geometry">
       <rect>
        <x>90</x>
@@ -432,7 +432,7 @@
       <set>Qt::AlignCenter</set>
      </property>
     </widget>
-    <widget class="QLabel" name="parametr_pH_1">
+    <widget class="QLabel" name="parametr_pH_N1">
      <property name="geometry">
       <rect>
        <x>90</x>
@@ -564,7 +564,7 @@
       <set>Qt::AlignCenter</set>
      </property>
     </widget>
-    <widget class="QLabel" name="nadpis_pH1_4">
+    <widget class="QLabel" name="nadpis_pH_V1">
      <property name="geometry">
       <rect>
        <x>20</x>
@@ -696,7 +696,7 @@
       <set>Qt::AlignCenter</set>
      </property>
     </widget>
-    <widget class="QLabel" name="parametr_temper_6">
+    <widget class="QLabel" name="paramertr_temperVanni_1">
      <property name="geometry">
       <rect>
        <x>90</x>
@@ -724,7 +724,7 @@
       <set>Qt::AlignCenter</set>
      </property>
     </widget>
-    <widget class="QLabel" name="nadpis_temper_6">
+    <widget class="QLabel" name="nadpis_temperVanni_1">
      <property name="geometry">
       <rect>
        <x>20</x>
@@ -757,7 +757,7 @@
       <set>Qt::AlignCenter</set>
      </property>
     </widget>
-    <widget class="QLabel" name="nadpis_pH1_2">
+    <widget class="QLabel" name="nadpis_pH_N1">
      <property name="geometry">
       <rect>
        <x>20</x>
@@ -823,7 +823,7 @@
       <set>Qt::AlignCenter</set>
      </property>
     </widget>
-    <widget class="QLabel" name="parametr_temper_1">
+    <widget class="QLabel" name="parametr_temperSredi_1">
      <property name="geometry">
       <rect>
        <x>90</x>
@@ -922,7 +922,7 @@
       <set>Qt::AlignCenter</set>
      </property>
     </widget>
-    <widget class="QLabel" name="nadpis_temper_1">
+    <widget class="QLabel" name="nadpis_temperSredi_1">
      <property name="geometry">
       <rect>
        <x>20</x>
@@ -1100,7 +1100,7 @@
     <property name="title">
      <string>СТАКАН №2</string>
     </property>
-    <widget class="QLabel" name="nadpis_DO2_N1_2">
+    <widget class="QLabel" name="nadpis_DO2_N2">
      <property name="geometry">
       <rect>
        <x>20</x>
@@ -1133,7 +1133,7 @@
       <set>Qt::AlignCenter</set>
      </property>
     </widget>
-    <widget class="QLabel" name="parametr_pH_4">
+    <widget class="QLabel" name="parametr_pH_V2">
      <property name="geometry">
       <rect>
        <x>90</x>
@@ -1166,7 +1166,7 @@
       <set>Qt::AlignCenter</set>
      </property>
     </widget>
-    <widget class="QLabel" name="parametr_pH_2">
+    <widget class="QLabel" name="parametr_pH_N2">
      <property name="geometry">
       <rect>
        <x>90</x>
@@ -1199,7 +1199,7 @@
       <set>Qt::AlignCenter</set>
      </property>
     </widget>
-    <widget class="QLabel" name="nadpis_CO2_N1_2">
+    <widget class="QLabel" name="nadpis_CO2_N2">
      <property name="geometry">
       <rect>
        <x>20</x>
@@ -1232,7 +1232,7 @@
       <set>Qt::AlignCenter</set>
      </property>
     </widget>
-    <widget class="QLabel" name="parametr_oboroti_4">
+    <widget class="QLabel" name="parametr_oboroti_2">
      <property name="geometry">
       <rect>
        <x>90</x>
@@ -1265,7 +1265,7 @@
       <set>Qt::AlignCenter</set>
      </property>
     </widget>
-    <widget class="QLabel" name="parametr_DO2_N1_2">
+    <widget class="QLabel" name="parametr_DO2_N2">
      <property name="geometry">
       <rect>
        <x>90</x>
@@ -1298,7 +1298,7 @@
       <set>Qt::AlignCenter</set>
      </property>
     </widget>
-    <widget class="QLabel" name="nadpis_pH1_5">
+    <widget class="QLabel" name="nadpis_pH_V2">
      <property name="geometry">
       <rect>
        <x>20</x>
@@ -1331,7 +1331,7 @@
       <set>Qt::AlignCenter</set>
      </property>
     </widget>
-    <widget class="QLabel" name="parametr_CO2_N1_2">
+    <widget class="QLabel" name="parametr_CO2_N2">
      <property name="geometry">
       <rect>
        <x>90</x>
@@ -1364,7 +1364,7 @@
       <set>Qt::AlignCenter</set>
      </property>
     </widget>
-    <widget class="QLabel" name="parametr_CO2_V1_2">
+    <widget class="QLabel" name="parametr_CO2_V2">
      <property name="geometry">
       <rect>
        <x>90</x>
@@ -1430,7 +1430,7 @@
       <set>Qt::AlignCenter</set>
      </property>
     </widget>
-    <widget class="QLabel" name="parametr_temper_7">
+    <widget class="QLabel" name="parametr_temperVanni_2">
      <property name="geometry">
       <rect>
        <x>90</x>
@@ -1463,7 +1463,7 @@
       <set>Qt::AlignCenter</set>
      </property>
     </widget>
-    <widget class="QLabel" name="nadpis_temper_7">
+    <widget class="QLabel" name="nadpis_temperVanni_2">
      <property name="geometry">
       <rect>
        <x>20</x>
@@ -1496,7 +1496,7 @@
       <set>Qt::AlignCenter</set>
      </property>
     </widget>
-    <widget class="QLabel" name="nadpis_pH1_3">
+    <widget class="QLabel" name="nadpis_pH_N2">
      <property name="geometry">
       <rect>
        <x>20</x>
@@ -1529,7 +1529,7 @@
       <set>Qt::AlignCenter</set>
      </property>
     </widget>
-    <widget class="QLabel" name="nadpis_CO2_V1_2">
+    <widget class="QLabel" name="nadpis_CO2_V2">
      <property name="geometry">
       <rect>
        <x>20</x>
@@ -1562,7 +1562,7 @@
       <set>Qt::AlignCenter</set>
      </property>
     </widget>
-    <widget class="QLabel" name="parametr_temper_4">
+    <widget class="QLabel" name="parametr_temperSredi_2">
      <property name="geometry">
       <rect>
        <x>90</x>
@@ -1595,7 +1595,7 @@
       <set>Qt::AlignCenter</set>
      </property>
     </widget>
-    <widget class="QLabel" name="nadpis_DO2_V1_2">
+    <widget class="QLabel" name="nadpis_DO2_V2">
      <property name="geometry">
       <rect>
        <x>20</x>
@@ -1628,7 +1628,7 @@
       <set>Qt::AlignCenter</set>
      </property>
     </widget>
-    <widget class="QLabel" name="parametr_DO2_V1_2">
+    <widget class="QLabel" name="parametr_DO2_V2">
      <property name="geometry">
       <rect>
        <x>90</x>
@@ -1661,7 +1661,7 @@
       <set>Qt::AlignCenter</set>
      </property>
     </widget>
-    <widget class="QLabel" name="nadpis_temper_4">
+    <widget class="QLabel" name="nadpis_temperSredi_2">
      <property name="geometry">
       <rect>
        <x>20</x>
