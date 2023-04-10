@@ -7,11 +7,13 @@ import threading
 stakan_1 = {'DO2V': 1, 'CO2V': 2, 'pHV' : 3, 'DO2N': 4, 'CO2N': 5, 'pHN' : 6, 'oborot' : 7, 'tsr' : 8, 'tvanni' : 9}
 stakan_2 = {'DO2V': 1, 'CO2V': 2, 'pHV' : 3, 'DO2N': 4, 'CO2N': 5, 'pHN' : 6, 'oborot' : 7, 'tsr' : 8, 'tvanni' : 9}
 
+
+
 def obnovlenie():
     while True:
         for i in stakan_2.keys():
            stakan_2[i] = random.randint(1, 100)
-        print (stakan_2)
+
         time.sleep(1)
 
 der = threading.Thread(target=obnovlenie)

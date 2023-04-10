@@ -5,6 +5,17 @@ import threading
 from PyQt5 import QtCore, QtGui, QtWidgets
 import client_TCP
 
+
+class MyThread(QtCore.QThread):
+    mysignal = QtCore.pyqtSignal(dict)
+    def __init__(self, parent=None):
+        QtCore.QThread.__init__(self, parent)
+
+    def run(self):
+        while True:
+            self.mysignal.emit(client_TCP.stakan_2)
+            time.sleep(3)
+
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
@@ -326,7 +337,7 @@ class Ui_MainWindow(object):
         self.parametr_DO2_V1.setText("")
         self.parametr_DO2_V1.setAlignment(QtCore.Qt.AlignCenter)
         self.parametr_DO2_V1.setObjectName("parametr_DO2_V1")
-        self.nadpis_temperSredi_1 = QtWidgets.QLabel(self.groupBox_stakan1)
+        self.nadpis_temperSredi_1 = QtWidgets.QLabel("")
         self.nadpis_temperSredi_1.setGeometry(QtCore.QRect(20, 340, 51, 21))
         font = QtGui.QFont()
         font.setPointSize(10)
@@ -593,6 +604,20 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
+        self.my_thed = MyThread()
+        self.my_thed.mysignal.connect(self.charg, QtCore.Qt.QueuedConnection)
+
+        self.pushButton_START_2.clicked.connect(self.on_clik)
+
+    def on_clik(self):
+        self.my_thed.start()
+
+    def charg(self, s):
+        self.parametr_pH_N2.setText(str(s['pHV']))
+        print (s['pHV'])
+
+
+
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
@@ -633,28 +658,10 @@ class Ui_MainWindow(object):
         self.nadpis_DO2_V2.setText(_translate("MainWindow", "DO2"))
         self.nadpis_temperSredi_2.setText(_translate("MainWindow", "T среды"))
 
-        self.flag = True
-        #self.start_opros()
 
 
 
 
-    def potok_dannih_in(self):
-        while self.flag:
-            self.parametr_DO2_V2.setText(str(client_TCP.stakan_2['DO2V']))
-            self.parametr_pH_N2.setText(str(client_TCP.stakan_2['pHN']))
-            self.parametr_temperSredi_2.setText(str(client_TCP.stakan_2['tsr']))
-            self.parametr_CO2_N2.setText(str(client_TCP.stakan_2['CO2N']))
-            self.parametr_DO2_N2.setText(str(client_TCP.stakan_2['DO2N']))
-            self.parametr_CO2_V2.setText(str(client_TCP.stakan_2['CO2V']))
-            self.parametr_temperVanni_2.setText(str(client_TCP.stakan_2['tvanni']))
-            self.parametr_pH_V2.setText(str(client_TCP.stakan_2['pHV']))
-            self.parametr_oboroti_2.setText(str(client_TCP.stakan_2['oborot']))
-            time.sleep(1)
-
-    #def start_opros(self):
-        #wer = threading.Thread(target=self.potok_dannih_in)
-        #self.pushButton_START_2.clicked.connect(wer.start())
 
 
 
@@ -664,9 +671,13 @@ def app(): # графический интерфей
     ui = Ui_MainWindow()
     ui.setupUi(MainWindow)
     MainWindow.show()
-    app.exec_()
-    ui.potok_dannih_in()
-    sys.exit()
+
+    sys.exit(app.exec_())
+
+
+
 
 if __name__ == "__main__":
     app()
+
+
