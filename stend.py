@@ -3,27 +3,67 @@ import sys
 import time
 import threading
 from PyQt5 import QtCore, QtGui, QtWidgets
-import client_TCP
+import work_with_db
 
 
-class MyThread(QtCore.QThread):
-    mysignal = QtCore.pyqtSignal(dict)
-    def __init__(self, parent=None):
+class Thread_start(QtCore.QThread):
+    mysignal = QtCore.pyqtSignal(str)
+    def __init__(self, r, parent=None):
         QtCore.QThread.__init__(self, parent)
-
+        self.r = r
+        self.flag = True
     def run(self):
         while True:
-            self.mysignal.emit(client_TCP.stakan_2)
+            self.flag = work_with_db.opros_db_na_start()
+            self.mysignal.emit(self.flag)
+            if self.flag != '0':
+                break
+            time.sleep(2)
+
+class MyThread_0(QtCore.QThread):
+    mysignal = QtCore.pyqtSignal(list)
+    def __init__(self, parent=None):
+        QtCore.QThread.__init__(self, parent)
+        self.flag = False
+    def run(self):
+        self.flag = True
+        while self.flag:
+            self.mysignal.emit(work_with_db.parametri)
             time.sleep(3)
 
-class Ui_MainWindow(object):
-    def setupUi(self, MainWindow):
-        MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(755, 599)
-        MainWindow.setFocusPolicy(QtCore.Qt.NoFocus)
-        MainWindow.setLayoutDirection(QtCore.Qt.LeftToRight)
-        MainWindow.setStyleSheet("background-color: rgb(170, 255, 255);")
-        self.centralwidget = QtWidgets.QWidget(MainWindow)
+class MyThread_1(QtCore.QThread):
+    mysignal = QtCore.pyqtSignal(list)
+    def __init__(self, parent=None):
+        QtCore.QThread.__init__(self, parent)
+        self.flag = False
+    def run(self):
+        self.flag = True
+        while self.flag:
+            self.mysignal.emit(work_with_db.stakan_1)
+            time.sleep(3)
+
+class MyThread_2(QtCore.QThread):
+    mysignal = QtCore.pyqtSignal(list)
+    def __init__(self, parent=None, ):
+        QtCore.QThread.__init__(self, parent)
+        self.flag = False
+    def run(self):
+        self.flag = True
+        while self.flag:
+            self.mysignal.emit(work_with_db.stakan_2)
+            time.sleep(3)
+
+
+
+class Ui_MainWindow(QtWidgets.QMainWindow):
+    def __init__(self, parent=None):
+        QtWidgets.QWidget.__init__(self, parent)
+        self.setObjectName("MainWindow")
+        self.resize(755, 599)
+        self.setFocusPolicy(QtCore.Qt.NoFocus)
+        self.setLayoutDirection(QtCore.Qt.LeftToRight)
+        self.setStyleSheet("background-color: rgb(170, 255, 255);")
+        self.centralwidget = QtWidgets.QWidget(self)
         self.centralwidget.setObjectName("centralwidget")
         self.pushButton_START_1 = QtWidgets.QPushButton(self.centralwidget)
         self.pushButton_START_1.setGeometry(QtCore.QRect(50, 90, 75, 23))
@@ -76,14 +116,14 @@ class Ui_MainWindow(object):
         self.pushButton.setFont(font)
         self.pushButton.setStyleSheet("background-color: rgb(0, 170, 255);")
         self.pushButton.setObjectName("pushButton")
-        self.textBrowser = QtWidgets.QTextBrowser(self.groupBox__ystavki1)
-        self.textBrowser.setGeometry(QtCore.QRect(20, 130, 71, 31))
-        self.textBrowser.setStyleSheet("background-color: rgb(255, 231, 206);")
-        self.textBrowser.setObjectName("textBrowser")
-        self.textBrowser_2 = QtWidgets.QTextBrowser(self.groupBox__ystavki1)
+        self.textBrowser_2 = QtWidgets.QLineEdit(self.groupBox__ystavki1)
         self.textBrowser_2.setGeometry(QtCore.QRect(20, 50, 71, 31))
         self.textBrowser_2.setStyleSheet("background-color: rgb(255, 231, 206);")
         self.textBrowser_2.setObjectName("textBrowser_2")
+        self.textBrowser_5 = QtWidgets.QLineEdit(self.groupBox__ystavki1)
+        self.textBrowser_5.setGeometry(QtCore.QRect(20, 130, 71, 31))
+        self.textBrowser_5.setStyleSheet("background-color: rgb(255, 231, 206);")
+        self.textBrowser_5.setObjectName("textBrowser_5")
         self.pushButton_STOP_2 = QtWidgets.QPushButton(self.centralwidget)
         self.pushButton_STOP_2.setGeometry(QtCore.QRect(410, 140, 75, 23))
         font = QtGui.QFont()
@@ -103,7 +143,9 @@ class Ui_MainWindow(object):
         self.pushButton_START_2.setStyleSheet("background-color: rgb(0, 255, 0);")
         self.pushButton_START_2.setObjectName("pushButton_START_2")
         self.parametr_temp_vozdyha = QtWidgets.QLabel(self.centralwidget)
-        self.parametr_temp_vozdyha.setGeometry(QtCore.QRect(380, 540, 131, 21))
+        self.parametr_temp_vozdyha.setGeometry(QtCore.QRect(370, 530, 131, 21))
+        font = QtGui.QFont()
+        font.setPointSize(10)
         self.parametr_temp_vozdyha.setMouseTracking(False)
         self.parametr_temp_vozdyha.setFocusPolicy(QtCore.Qt.StrongFocus)
         self.parametr_temp_vozdyha.setLayoutDirection(QtCore.Qt.LeftToRight)
@@ -112,7 +154,7 @@ class Ui_MainWindow(object):
         self.parametr_temp_vozdyha.setAlignment(QtCore.Qt.AlignCenter)
         self.parametr_temp_vozdyha.setObjectName("parametr_temp_vozdyha")
         self.nadpis_temp_vozdyha = QtWidgets.QLabel(self.centralwidget)
-        self.nadpis_temp_vozdyha.setGeometry(QtCore.QRect(210, 540, 141, 21))
+        self.nadpis_temp_vozdyha.setGeometry(QtCore.QRect(200, 530, 141, 21))
         font = QtGui.QFont()
         font.setPointSize(10)
         self.nadpis_temp_vozdyha.setFont(font)
@@ -138,7 +180,7 @@ class Ui_MainWindow(object):
         font.setBold(True)
         font.setWeight(75)
         self.pushButton_START.setFont(font)
-        self.pushButton_START.setStyleSheet("background-color: rgb(0, 255, 0);")
+        self.pushButton_START.setStyleSheet("background-color: rgb(252, 234, 255);")
         self.pushButton_START.setObjectName("pushButton_START")
         self.groupBox_stakan1 = QtWidgets.QGroupBox(self.centralwidget)
         self.groupBox_stakan1.setGeometry(QtCore.QRect(160, 90, 151, 411))
@@ -260,15 +302,20 @@ class Ui_MainWindow(object):
         self.nadpis_oboroti_1.setStyleSheet("background-color: rgb(251, 255, 167);")
         self.nadpis_oboroti_1.setAlignment(QtCore.Qt.AlignCenter)
         self.nadpis_oboroti_1.setObjectName("nadpis_oboroti_1")
-        self.paramertr_temperVanni_1 = QtWidgets.QLabel(self.groupBox_stakan1)
-        self.paramertr_temperVanni_1.setGeometry(QtCore.QRect(90, 380, 51, 21))
-        self.paramertr_temperVanni_1.setMouseTracking(False)
-        self.paramertr_temperVanni_1.setFocusPolicy(QtCore.Qt.StrongFocus)
-        self.paramertr_temperVanni_1.setLayoutDirection(QtCore.Qt.LeftToRight)
-        self.paramertr_temperVanni_1.setStyleSheet("background-color: rgb(197, 255, 161);")
-        self.paramertr_temperVanni_1.setText("")
-        self.paramertr_temperVanni_1.setAlignment(QtCore.Qt.AlignCenter)
-        self.paramertr_temperVanni_1.setObjectName("paramertr_temperVanni_1")
+
+        self.parametr_temperVanni_1 = QtWidgets.QLabel(self.groupBox_stakan1)
+        self.parametr_temperVanni_1.setGeometry(QtCore.QRect(90, 380, 51, 21))
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        self.parametr_temperVanni_1.setFont(font)
+        self.parametr_temperVanni_1.setMouseTracking(False)
+        self.parametr_temperVanni_1.setFocusPolicy(QtCore.Qt.StrongFocus)
+        self.parametr_temperVanni_1.setLayoutDirection(QtCore.Qt.LeftToRight)
+        self.parametr_temperVanni_1.setStyleSheet("background-color: rgb(197, 255, 161);")
+        self.parametr_temperVanni_1.setText("")
+        self.parametr_temperVanni_1.setAlignment(QtCore.Qt.AlignCenter)
+        self.parametr_temperVanni_1.setObjectName("parametr_temperVanni_1")
+
         self.nadpis_temperVanni_1 = QtWidgets.QLabel(self.groupBox_stakan1)
         self.nadpis_temperVanni_1.setGeometry(QtCore.QRect(20, 380, 51, 21))
         font = QtGui.QFont()
@@ -280,6 +327,7 @@ class Ui_MainWindow(object):
         self.nadpis_temperVanni_1.setStyleSheet("background-color: rgb(251, 255, 167);")
         self.nadpis_temperVanni_1.setAlignment(QtCore.Qt.AlignCenter)
         self.nadpis_temperVanni_1.setObjectName("nadpis_temperVanni_1")
+
         self.nadpis_pH_N1 = QtWidgets.QLabel(self.groupBox_stakan1)
         self.nadpis_pH_N1.setGeometry(QtCore.QRect(20, 260, 51, 21))
         font = QtGui.QFont()
@@ -337,7 +385,7 @@ class Ui_MainWindow(object):
         self.parametr_DO2_V1.setText("")
         self.parametr_DO2_V1.setAlignment(QtCore.Qt.AlignCenter)
         self.parametr_DO2_V1.setObjectName("parametr_DO2_V1")
-        self.nadpis_temperSredi_1 = QtWidgets.QLabel("")
+        self.nadpis_temperSredi_1 = QtWidgets.QLabel(self.groupBox_stakan1)
         self.nadpis_temperSredi_1.setGeometry(QtCore.QRect(20, 340, 51, 21))
         font = QtGui.QFont()
         font.setPointSize(10)
@@ -348,6 +396,29 @@ class Ui_MainWindow(object):
         self.nadpis_temperSredi_1.setStyleSheet("background-color: rgb(251, 255, 167);")
         self.nadpis_temperSredi_1.setAlignment(QtCore.Qt.AlignCenter)
         self.nadpis_temperSredi_1.setObjectName("nadpis_temperSredi_1")
+        self.nadpis_Pelte_1 = QtWidgets.QLabel(self.groupBox_stakan1)
+        self.nadpis_Pelte_1.setGeometry(QtCore.QRect(20, 140, 51, 21))
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        self.nadpis_Pelte_1.setFont(font)
+        self.nadpis_Pelte_1.setMouseTracking(False)
+        self.nadpis_Pelte_1.setFocusPolicy(QtCore.Qt.StrongFocus)
+        self.nadpis_Pelte_1.setLayoutDirection(QtCore.Qt.LeftToRight)
+        self.nadpis_Pelte_1.setStyleSheet("background-color: rgb(251, 255, 167);")
+        self.nadpis_Pelte_1.setAlignment(QtCore.Qt.AlignCenter)
+        self.nadpis_Pelte_1.setObjectName("nadpis_Pelte_1")
+        self.parametr_Pelte_1 = QtWidgets.QLabel(self.groupBox_stakan1)
+        self.parametr_Pelte_1.setGeometry(QtCore.QRect(90, 140, 51, 21))
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        self.parametr_Pelte_1.setFont(font)
+        self.parametr_Pelte_1.setMouseTracking(False)
+        self.parametr_Pelte_1.setFocusPolicy(QtCore.Qt.StrongFocus)
+        self.parametr_Pelte_1.setLayoutDirection(QtCore.Qt.LeftToRight)
+        self.parametr_Pelte_1.setStyleSheet("background-color: rgb(197, 255, 161);")
+        self.parametr_Pelte_1.setText("")
+        self.parametr_Pelte_1.setAlignment(QtCore.Qt.AlignCenter)
+        self.parametr_Pelte_1.setObjectName("parametr_Pelte_1")
         self.groupBox__ystavki2 = QtWidgets.QGroupBox(self.centralwidget)
         self.groupBox__ystavki2.setGeometry(QtCore.QRect(390, 240, 111, 221))
         self.groupBox__ystavki2.setStyleSheet("background-color: rgb(170, 255, 127);")
@@ -381,11 +452,11 @@ class Ui_MainWindow(object):
         self.pushButton_2.setFont(font)
         self.pushButton_2.setStyleSheet("background-color: rgb(0, 170, 255);")
         self.pushButton_2.setObjectName("pushButton_2")
-        self.textBrowser_3 = QtWidgets.QTextBrowser(self.groupBox__ystavki2)
+        self.textBrowser_3 = QtWidgets.QLineEdit(self.groupBox__ystavki2)
         self.textBrowser_3.setGeometry(QtCore.QRect(20, 50, 71, 31))
         self.textBrowser_3.setStyleSheet("background-color: rgb(255, 231, 206);")
         self.textBrowser_3.setObjectName("textBrowser_3")
-        self.textBrowser_4 = QtWidgets.QTextBrowser(self.groupBox__ystavki2)
+        self.textBrowser_4 = QtWidgets.QLineEdit(self.groupBox__ystavki2)
         self.textBrowser_4.setGeometry(QtCore.QRect(20, 130, 71, 31))
         self.textBrowser_4.setStyleSheet("background-color: rgb(255, 231, 206);")
         self.textBrowser_4.setObjectName("textBrowser_4")
@@ -600,24 +671,230 @@ class Ui_MainWindow(object):
         self.nadpis_temperSredi_2.setStyleSheet("background-color: rgb(251, 255, 167);")
         self.nadpis_temperSredi_2.setAlignment(QtCore.Qt.AlignCenter)
         self.nadpis_temperSredi_2.setObjectName("nadpis_temperSredi_2")
-        MainWindow.setCentralWidget(self.centralwidget)
+        self.parametr_Pelte_2 = QtWidgets.QLabel(self.groupBox_stakan2)
+        self.parametr_Pelte_2.setGeometry(QtCore.QRect(90, 140, 51, 21))
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        self.parametr_Pelte_2.setFont(font)
+        self.parametr_Pelte_2.setMouseTracking(False)
+        self.parametr_Pelte_2.setFocusPolicy(QtCore.Qt.StrongFocus)
+        self.parametr_Pelte_2.setLayoutDirection(QtCore.Qt.LeftToRight)
+        self.parametr_Pelte_2.setStyleSheet("background-color: rgb(197, 255, 161);")
+        self.parametr_Pelte_2.setText("")
+        self.parametr_Pelte_2.setAlignment(QtCore.Qt.AlignCenter)
+        self.parametr_Pelte_2.setObjectName("parametr_Pelte_2")
+        self.nadpis_Pelte_2 = QtWidgets.QLabel(self.groupBox_stakan2)
+        self.nadpis_Pelte_2.setGeometry(QtCore.QRect(20, 140, 51, 21))
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        self.nadpis_Pelte_2.setFont(font)
+        self.nadpis_Pelte_2.setMouseTracking(False)
+        self.nadpis_Pelte_2.setFocusPolicy(QtCore.Qt.StrongFocus)
+        self.nadpis_Pelte_2.setLayoutDirection(QtCore.Qt.LeftToRight)
+        self.nadpis_Pelte_2.setStyleSheet("background-color: rgb(251, 255, 167);")
+        self.nadpis_Pelte_2.setAlignment(QtCore.Qt.AlignCenter)
+        self.nadpis_Pelte_2.setObjectName("nadpis_Pelte_2")
+        self.parametr_temp_radiatora = QtWidgets.QLabel(self.centralwidget)
+        self.parametr_temp_radiatora.setGeometry(QtCore.QRect(370, 560, 131, 21))
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        self.parametr_temp_radiatora.setMouseTracking(False)
+        self.parametr_temp_radiatora.setFocusPolicy(QtCore.Qt.StrongFocus)
+        self.parametr_temp_radiatora.setLayoutDirection(QtCore.Qt.LeftToRight)
+        self.parametr_temp_radiatora.setStyleSheet("background-color: rgb(197, 255, 161);")
+        self.parametr_temp_radiatora.setText("")
+        self.parametr_temp_radiatora.setAlignment(QtCore.Qt.AlignCenter)
+        self.parametr_temp_radiatora.setObjectName("parametr_temp_radiatora")
+        self.nadpis_temp_radiatora = QtWidgets.QLabel(self.centralwidget)
+        self.nadpis_temp_radiatora.setGeometry(QtCore.QRect(200, 560, 141, 21))
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        self.nadpis_temp_radiatora.setFont(font)
+        self.nadpis_temp_radiatora.setMouseTracking(False)
+        self.nadpis_temp_radiatora.setFocusPolicy(QtCore.Qt.StrongFocus)
+        self.nadpis_temp_radiatora.setLayoutDirection(QtCore.Qt.LeftToRight)
+        self.nadpis_temp_radiatora.setStyleSheet("background-color: rgb(251, 255, 167);")
+        self.nadpis_temp_radiatora.setAlignment(QtCore.Qt.AlignCenter)
+        self.nadpis_temp_radiatora.setObjectName("nadpis_temp_radiatora")
+        self.setCentralWidget(self.centralwidget)
 
-        self.retranslateUi(MainWindow)
-        QtCore.QMetaObject.connectSlotsByName(MainWindow)
-        self.my_thed = MyThread()
-        self.my_thed.mysignal.connect(self.charg, QtCore.Qt.QueuedConnection)
+        self.retranslateUi(self)
+        QtCore.QMetaObject.connectSlotsByName(self)
 
-        self.pushButton_START_2.clicked.connect(self.on_clik)
+        # функциональная часть интерфейса
 
-    def on_clik(self):
-        self.my_thed.start()
+        # начальное состояние кнопок
+        self.pushButton_START.setDisabled(True)
+        self.pushButton_START_1.setDisabled(True)
+        self.pushButton_START_2.setDisabled(True)
+        self.pushButton_STOP.setDisabled(True)
+        self.pushButton_STOP_1.setDisabled(True)
+        self.pushButton_STOP_2.setDisabled(True)
+        self.pushButton.setDisabled(True)
+        self.pushButton_2.setDisabled(True)
 
-    def charg(self, s):
-        self.parametr_pH_N2.setText(str(s['pHV']))
-        print (s['pHV'])
+
+
+        # запуск потока на активацию кнопки
+        self.start_active = Thread_start(11)
+        self.start_active.mysignal.connect(self.start_stend, QtCore.Qt.QueuedConnection)
+        self.start_active.start()
+
+        # запуск системы кнопкой ПУСК
+        self.pushButton_START.clicked.connect(self.zapros_vkl)
+        self.start_active_2 = Thread_start(22)
+        self.start_active_2.mysignal.connect(self.start_stend_2, QtCore.Qt.QueuedConnection)
 
 
 
+        # запуск потоков start stop стаканов
+        self.thread_1 = MyThread_1()
+        self.thread_2 = MyThread_2()
+        self.thread_0 = MyThread_0()
+        self.thread_1.mysignal.connect(self.charg_1, QtCore.Qt.QueuedConnection)
+        self.thread_2.mysignal.connect(self.charg_2, QtCore.Qt.QueuedConnection)
+        self.thread_0.mysignal.connect(self.charg_0, QtCore.Qt.QueuedConnection)
+        self.pushButton_START_1.clicked.connect(self.start_1)
+        self.pushButton_STOP_1.clicked.connect(self.stop_1)
+        self.pushButton_START_2.clicked.connect(self.start_2)
+        self.pushButton_STOP_2.clicked.connect(self.stop_2)
+        self.pushButton.clicked.connect(self.massedge_1)
+        self.pushButton_2.clicked.connect(self.massedge_2)
+
+    # методы
+    def start_stend(self, st):
+        if st != '0':
+            self.pushButton_START.setDisabled(False)
+            self.pushButton_START.setStyleSheet("background-color: rgb(0, 255, 0);")
+
+    def zapros_vkl(self):
+        self.pushButton_START.setDisabled(True)
+        self.pushButton_START.setStyleSheet("background-color: rgb(197, 255, 161);")
+        work_with_db.messege_db_na_start(0)
+        self.start_active_2.start()
+
+        wer = threading.Thread(target=work_with_db.opros_db)
+        wer.start()
+
+
+    def start_stend_2(self, ert):
+        if ert != '0':
+            self.pushButton_START.setStyleSheet("background-color: rgb(0, 255, 0);")
+            self.pushButton_START_1.setDisabled(False)
+            self.pushButton_START_2.setDisabled(False)
+            self.pushButton_STOP.setDisabled(True)
+
+
+
+
+    def massedge_1(self):
+        oboroti = self.textBrowser_2.text()
+        temper = self.textBrowser_5.text()
+        work_with_db.send_to_db(1, oboroti, temper)
+
+    def massedge_2(self):
+        oboroti = self.textBrowser_3.text()
+        temper = self.textBrowser_4.text()
+        work_with_db.send_to_db(2, oboroti, temper)
+
+
+
+    def start_1(self):
+        if not self.thread_1.isRunning():
+            self.thread_1.start()
+            self.thread_0.start()
+        self.pushButton_STOP_1.setDisabled(False)
+        self.pushButton_START_1.setDisabled(True)
+
+    def charg_0(self, s):
+        self.parametr_temp_vozdyha.setText(s[0])
+        self.parametr_temp_radiatora.setText(s[1])
+
+
+    def charg_1(self, s):
+        self.parametr_DO2_V1.setText(s[0])
+        self.parametr_CO2_V1.setText(s[1])
+        self.parametr_pH_V1.setText(s[2])
+        self.parametr_Pelte_1.setText(s[3])
+        self.parametr_DO2_N1.setText(s[4])
+        self.parametr_CO2_N1.setText(s[5])
+        self.parametr_pH_N1.setText(s[6])
+        self.parametr_oboroti_1.setText(s[7])
+        self.parametr_temperVanni_1.setText(s[8])
+        self.parametr_temperSredi_1.setText(s[9])
+
+
+
+
+    def stop_1(self):
+        self.thread_1.flag = False
+        self.parametr_DO2_V1.setText('')
+        self.parametr_CO2_V1.setText('')
+        self.parametr_pH_V1.setText('')
+        self.parametr_Pelte_1.setText('')
+        self.parametr_DO2_N1.setText('')
+        self.parametr_CO2_N1.setText('')
+        self.parametr_pH_N1.setText('')
+        self.parametr_oboroti_1.setText('')
+        self.parametr_temperVanni_1.setText('')
+        self.parametr_temperSredi_1.setText('')
+        self.thread_0.flag = False
+        self.parametr_temp_vozdyha.setText('')
+        self.parametr_temp_radiatora.setText('')
+
+        time.sleep(3)
+        self.pushButton_STOP_1.setDisabled(True)
+        self.pushButton_START_1.setDisabled(False)
+
+    def start_2(self):
+        if not self.thread_2.isRunning():
+            self.thread_2.start()
+        self.pushButton_STOP_2.setDisabled(False)
+        self.pushButton_START_2.setDisabled(True)
+
+    def charg_2(self, s):
+        self.parametr_DO2_V2.setText(s[0])
+        self.parametr_CO2_V2.setText(s[1])
+        self.parametr_pH_V2.setText(s[2])
+        self.parametr_Pelte_2.setText(s[3])
+        self.parametr_DO2_N2.setText(s[4])
+        self.parametr_CO2_N2.setText(s[5])
+        self.parametr_pH_N2.setText(s[6])
+        self.parametr_oboroti_2.setText(s[7])
+        self.parametr_temperVanni_2.setText(s[8])
+        self.parametr_temperSredi_2.setText(s[9])
+
+
+
+    def stop_2(self):
+        self.thread_2.flag = False
+        self.parametr_DO2_V2.setText('')
+        self.parametr_CO2_V2.setText('')
+        self.parametr_pH_V2.setText('')
+        self.parametr_Pelte_2.setText('')
+        self.parametr_DO2_N2.setText('')
+        self.parametr_CO2_N2.setText('')
+        self.parametr_pH_N2.setText('')
+        self.parametr_oboroti_2.setText('')
+        self.parametr_temperVanni_2.setText('')
+        self.parametr_temperSredi_2.setText('')
+
+        self.pushButton_STOP_2.setDisabled(True)
+        time.sleep(3)
+        self.pushButton_START_2.setDisabled(False)
+
+    def closeEvent(self, event): # Закрытие потоков при закрытии окна
+        self.hide()
+        if  self.thread_0.isRunning():
+            self.thread_0.flag = False
+        if  self.thread_1.isRunning():
+            self.thread_1.flag = False
+        if self.thread_2.isRunning():
+            self.thread_2.flag = False
+
+        work_with_db.flag_opros_db = False
+        self.thread_1.wait(3000)
+        event.accept()
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
@@ -643,6 +920,7 @@ class Ui_MainWindow(object):
         self.nadpis_CO2_V1.setText(_translate("MainWindow", "CO2"))
         self.nadpis_DO2_V1.setText(_translate("MainWindow", "DO2"))
         self.nadpis_temperSredi_1.setText(_translate("MainWindow", "T среды"))
+        self.nadpis_Pelte_1.setText(_translate("MainWindow", "Пельтье"))
         self.groupBox__ystavki2.setTitle(_translate("MainWindow", "УСТАВКИ"))
         self.nadpis_temper_3.setText(_translate("MainWindow", "T"))
         self.nadpis_oboroti_3.setText(_translate("MainWindow", "обороты"))
@@ -657,20 +935,32 @@ class Ui_MainWindow(object):
         self.nadpis_CO2_V2.setText(_translate("MainWindow", "CO2"))
         self.nadpis_DO2_V2.setText(_translate("MainWindow", "DO2"))
         self.nadpis_temperSredi_2.setText(_translate("MainWindow", "T среды"))
+        self.nadpis_Pelte_2.setText(_translate("MainWindow", "Пельтье"))
+        self.nadpis_temp_radiatora.setText(_translate("MainWindow", "температура радиатора"))
 
 
-
-
-
-
+class MyWindow(QtWidgets.QWidget):
+    def __init__(self, parent=None):
+        QtWidgets.QWidget.__init__(self, parent)
+        self.label = QtWidgets.QLabel("Имитация сигнала от Петровича")
+        self.label.setAlignment(QtCore.Qt.AlignHCenter)
+        self.btnQuit = QtWidgets.QPushButton("Сменить флаг на 1")
+        self.vbox = QtWidgets.QVBoxLayout()
+        self.vbox.addWidget(self.label)
+        self.vbox.addWidget(self.btnQuit)
+        self.setLayout(self.vbox)
+        self.btnQuit.clicked.connect(work_with_db.smena_flaga) # поменять на функцию замены
 
 
 def app(): # графический интерфей
     app = QtWidgets.QApplication(sys.argv)
-    MainWindow = QtWidgets.QMainWindow()
-    ui = Ui_MainWindow()
-    ui.setupUi(MainWindow)
+    MainWindow = Ui_MainWindow()
     MainWindow.show()
+
+    window = MyWindow()  # Создаем экземпляр класса
+    window.setWindowTitle("ООП-стиль создания окна")
+    window.resize(300, 70)
+    window.show()  # Отображаем окно
 
     sys.exit(app.exec_())
 

@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>755</width>
+    <width>685</width>
     <height>599</height>
    </rect>
   </property>
@@ -171,11 +171,11 @@
       <string>Примеить</string>
      </property>
     </widget>
-    <widget class="QTextBrowser" name="textBrowser">
+    <widget class="QLineEdit" name="textBrowser_2">
      <property name="geometry">
       <rect>
        <x>20</x>
-       <y>130</y>
+       <y>50</y>
        <width>71</width>
        <height>31</height>
       </rect>
@@ -184,11 +184,11 @@
       <string notr="true">background-color: rgb(255, 231, 206);</string>
      </property>
     </widget>
-    <widget class="QTextBrowser" name="textBrowser_2">
+    <widget class="QLineEdit" name="textBrowser_5">
      <property name="geometry">
       <rect>
        <x>20</x>
-       <y>50</y>
+       <y>130</y>
        <width>71</width>
        <height>31</height>
       </rect>
@@ -247,8 +247,8 @@
    <widget class="QLabel" name="parametr_temp_vozdyha">
     <property name="geometry">
      <rect>
-      <x>380</x>
-      <y>540</y>
+      <x>370</x>
+      <y>530</y>
       <width>131</width>
       <height>21</height>
      </rect>
@@ -275,8 +275,8 @@
    <widget class="QLabel" name="nadpis_temp_vozdyha">
     <property name="geometry">
      <rect>
-      <x>210</x>
-      <y>540</y>
+      <x>200</x>
+      <y>530</y>
       <width>141</width>
       <height>21</height>
      </rect>
@@ -696,7 +696,7 @@
       <set>Qt::AlignCenter</set>
      </property>
     </widget>
-    <widget class="QLabel" name="paramertr_temperVanni_1">
+    <widget class="QLabel" name="parametr_temperVanni_1">
      <property name="geometry">
       <rect>
        <x>90</x>
@@ -955,6 +955,72 @@
       <set>Qt::AlignCenter</set>
      </property>
     </widget>
+    <widget class="QLabel" name="nadpis_Pelte_1">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>140</y>
+       <width>51</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>10</pointsize>
+      </font>
+     </property>
+     <property name="mouseTracking">
+      <bool>false</bool>
+     </property>
+     <property name="focusPolicy">
+      <enum>Qt::StrongFocus</enum>
+     </property>
+     <property name="layoutDirection">
+      <enum>Qt::LeftToRight</enum>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(251, 255, 167);</string>
+     </property>
+     <property name="text">
+      <string>Пельтье</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+    <widget class="QLabel" name="parametr_Pelte_1">
+     <property name="geometry">
+      <rect>
+       <x>90</x>
+       <y>140</y>
+       <width>51</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>10</pointsize>
+      </font>
+     </property>
+     <property name="mouseTracking">
+      <bool>false</bool>
+     </property>
+     <property name="focusPolicy">
+      <enum>Qt::StrongFocus</enum>
+     </property>
+     <property name="layoutDirection">
+      <enum>Qt::LeftToRight</enum>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(197, 255, 161);</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
    </widget>
    <widget class="QGroupBox" name="groupBox__ystavki2">
     <property name="geometry">
@@ -1058,7 +1124,7 @@
       <string>Примеить</string>
      </property>
     </widget>
-    <widget class="QTextBrowser" name="textBrowser_3">
+    <widget class="QLineEdit" name="textBrowser_3">
      <property name="geometry">
       <rect>
        <x>20</x>
@@ -1071,7 +1137,7 @@
       <string notr="true">background-color: rgb(255, 231, 206);</string>
      </property>
     </widget>
-    <widget class="QTextBrowser" name="textBrowser_4">
+    <widget class="QLineEdit" name="textBrowser_4">
      <property name="geometry">
       <rect>
        <x>20</x>
@@ -1694,6 +1760,133 @@
       <set>Qt::AlignCenter</set>
      </property>
     </widget>
+    <widget class="QLabel" name="parametr_Pelte_2">
+     <property name="geometry">
+      <rect>
+       <x>90</x>
+       <y>140</y>
+       <width>51</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>10</pointsize>
+      </font>
+     </property>
+     <property name="mouseTracking">
+      <bool>false</bool>
+     </property>
+     <property name="focusPolicy">
+      <enum>Qt::StrongFocus</enum>
+     </property>
+     <property name="layoutDirection">
+      <enum>Qt::LeftToRight</enum>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(197, 255, 161);</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+    <widget class="QLabel" name="nadpis_Pelte_2">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>140</y>
+       <width>51</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>10</pointsize>
+      </font>
+     </property>
+     <property name="mouseTracking">
+      <bool>false</bool>
+     </property>
+     <property name="focusPolicy">
+      <enum>Qt::StrongFocus</enum>
+     </property>
+     <property name="layoutDirection">
+      <enum>Qt::LeftToRight</enum>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(251, 255, 167);</string>
+     </property>
+     <property name="text">
+      <string>Пельтье</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QLabel" name="parametr_temp_radiatora">
+    <property name="geometry">
+     <rect>
+      <x>370</x>
+      <y>560</y>
+      <width>131</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="mouseTracking">
+     <bool>false</bool>
+    </property>
+    <property name="focusPolicy">
+     <enum>Qt::StrongFocus</enum>
+    </property>
+    <property name="layoutDirection">
+     <enum>Qt::LeftToRight</enum>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(197, 255, 161);</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
+   <widget class="QLabel" name="nadpis_temp_radiatora">
+    <property name="geometry">
+     <rect>
+      <x>200</x>
+      <y>560</y>
+      <width>141</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>10</pointsize>
+     </font>
+    </property>
+    <property name="mouseTracking">
+     <bool>false</bool>
+    </property>
+    <property name="focusPolicy">
+     <enum>Qt::StrongFocus</enum>
+    </property>
+    <property name="layoutDirection">
+     <enum>Qt::LeftToRight</enum>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(251, 255, 167);</string>
+    </property>
+    <property name="text">
+     <string>температура радиатора</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
    </widget>
   </widget>
  </widget>
