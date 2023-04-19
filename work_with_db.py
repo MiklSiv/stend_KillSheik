@@ -1,14 +1,17 @@
-import socket
 import time
-import random
-import threading
 import sqlite3
 
+patch_db = 'interface_back.db'
 
 # обнуление сигналов DB на вход - убрать в нормальном коде
 with sqlite3.connect('interface_back.db') as tabl:
     cursor = tabl.cursor()
-    cursor.execute(f"UPDATE funсtion_tabl SET out_com = 0 WHERE command = 'POWER'")
+    cursor.execute(f"UPDATE funсtion_tabl SET out_com = 0, in_com = 1 WHERE command = 'POWER'")
+    cursor.execute(f"UPDATE funсtion_tabl SET out_com = 0, in_com = 0 WHERE command = 'POWER_1'")
+    cursor.execute(f"UPDATE funсtion_tabl SET out_com = 0, in_com = 0 WHERE command = 'POWER_2'")
+    cursor.execute(f"UPDATE funсtion_tabl SET out_com = 0, in_com = 0 WHERE command = 'STOP_1'")
+    cursor.execute(f"UPDATE funсtion_tabl SET out_com = 0, in_com = 0 WHERE command = 'STOP_2'")
+    cursor.execute(f"UPDATE funсtion_tabl SET out_com = 0, in_com = 0 WHERE command = 'STOP'")
     tabl.commit()
 
 # проверка на состояние системы от Петровича, при наличии 1 в ячейке (out_com) поля POWER запуск старт
@@ -19,21 +22,45 @@ def opros_db_na_start():
         teg = cursor.fetchone()[0]
         if teg != '0':
             cursor.execute(f"UPDATE funсtion_tabl SET out_com = 0 WHERE command = 'POWER'")
-            cursor.execute(f"UPDATE funсtion_tabl SET in_com = 0 WHERE command = 'POWER'")
             tabl.commit()
         return teg
 
-def messege_db_na_start(n):
+def messege_to_functh_db(n): # активация соответсвующего сигнала в ДБ
     with sqlite3.connect('interface_back.db') as tabl:
         cursor = tabl.cursor()
-        if n == 0:
+        if n == 1:
             cursor.execute(f"UPDATE funсtion_tabl SET in_com = 1 WHERE command = 'POWER'")
-        elif n == 1:
-            cursor.execute(f"UPDATE funсtion_tabl SET in_com = 1 WHERE command = 'POWER'")
-
-
-
+        elif n == 0:
+            cursor.execute(f"UPDATE funсtion_tabl SET in_com = 1 WHERE command = 'STOP'")
+        elif n == 11:
+            cursor.execute(f"UPDATE funсtion_tabl SET in_com = 1 WHERE command = 'POWER_1'")
+            tabl.commit()
+            while True:
+                cursor.execute("SELECT out_com FROM funсtion_tabl WHERE command = 'POWER_1'")
+                teg = cursor.fetchone()[0]
+                if teg != '0':
+                    cursor.execute(f"UPDATE funсtion_tabl SET out_com = 0 WHERE command = 'POWER_1'")
+                    break
+                time.sleep(3)
+                cursor.execute(f"UPDATE funсtion_tabl SET out_com = 1 WHERE command = 'POWER_1'")
+        elif n == 10:
+            cursor.execute(f"UPDATE funсtion_tabl SET in_com = 1 WHERE command = 'STOP_1'")
+        elif n == 21:
+            cursor.execute(f"UPDATE funсtion_tabl SET in_com = 1 WHERE command = 'POWER_2'")
+            tabl.commit()
+            while True:
+                cursor.execute("SELECT out_com FROM funсtion_tabl WHERE command = 'POWER_2'")
+                teg = cursor.fetchone()[0]
+                if teg != '0':
+                    cursor.execute(f"UPDATE funсtion_tabl SET out_com = 0 WHERE command = 'POWER_2'")
+                    break
+                time.sleep(3)
+                cursor.execute(f"UPDATE funсtion_tabl SET out_com = 1 WHERE command = 'POWER_2'")
+        elif n == 20:
+            cursor.execute(f"UPDATE funсtion_tabl SET in_com = 1 WHERE command = 'STOP_2'")
         tabl.commit()
+
+
 
 
 # переменные для формирования данных клиенту и интерфейсу

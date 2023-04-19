@@ -6,11 +6,10 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 import work_with_db
 
 
-class Thread_start(QtCore.QThread):
+class Thread_start(QtCore.QThread): # поток на
     mysignal = QtCore.pyqtSignal(str)
-    def __init__(self, r, parent=None):
+    def __init__(self, parent=None):
         QtCore.QThread.__init__(self, parent)
-        self.r = r
         self.flag = True
     def run(self):
         while True:
@@ -20,18 +19,19 @@ class Thread_start(QtCore.QThread):
                 break
             time.sleep(2)
 
-class MyThread_0(QtCore.QThread):
+class MyThread_0(QtCore.QThread): # поток опроса вне стакана
     mysignal = QtCore.pyqtSignal(list)
     def __init__(self, parent=None):
         QtCore.QThread.__init__(self, parent)
         self.flag = False
+
     def run(self):
         self.flag = True
         while self.flag:
             self.mysignal.emit(work_with_db.parametri)
             time.sleep(3)
 
-class MyThread_1(QtCore.QThread):
+class MyThread_1(QtCore.QThread): # поток опрса стакана 1
     mysignal = QtCore.pyqtSignal(list)
     def __init__(self, parent=None):
         QtCore.QThread.__init__(self, parent)
@@ -42,7 +42,7 @@ class MyThread_1(QtCore.QThread):
             self.mysignal.emit(work_with_db.stakan_1)
             time.sleep(3)
 
-class MyThread_2(QtCore.QThread):
+class MyThread_2(QtCore.QThread): # поток опроса стакана 2
     mysignal = QtCore.pyqtSignal(list)
     def __init__(self, parent=None, ):
         QtCore.QThread.__init__(self, parent)
@@ -71,7 +71,7 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         font.setBold(True)
         font.setWeight(75)
         self.pushButton_START_1.setFont(font)
-        self.pushButton_START_1.setStyleSheet("background-color: rgb(0, 255, 0);")
+        self.pushButton_START_1.setStyleSheet("background-color: rgb(190, 190, 190);")
         self.pushButton_START_1.setObjectName("pushButton_START_1")
         self.pushButton_STOP_1 = QtWidgets.QPushButton(self.centralwidget)
         self.pushButton_STOP_1.setGeometry(QtCore.QRect(50, 140, 75, 23))
@@ -81,7 +81,7 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         font.setUnderline(False)
         font.setWeight(75)
         self.pushButton_STOP_1.setFont(font)
-        self.pushButton_STOP_1.setStyleSheet("background-color: rgb(255, 85, 0);")
+        self.pushButton_STOP_1.setStyleSheet("background-color: rgb(190, 190, 190);")
         self.pushButton_STOP_1.setObjectName("pushButton_STOP_1")
         self.groupBox__ystavki1 = QtWidgets.QGroupBox(self.centralwidget)
         self.groupBox__ystavki1.setGeometry(QtCore.QRect(30, 240, 111, 221))
@@ -132,7 +132,7 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         font.setUnderline(False)
         font.setWeight(75)
         self.pushButton_STOP_2.setFont(font)
-        self.pushButton_STOP_2.setStyleSheet("background-color: rgb(255, 85, 0);")
+        self.pushButton_STOP_2.setStyleSheet("background-color: rgb(190, 190, 190);")
         self.pushButton_STOP_2.setObjectName("pushButton_STOP_2")
         self.pushButton_START_2 = QtWidgets.QPushButton(self.centralwidget)
         self.pushButton_START_2.setGeometry(QtCore.QRect(410, 90, 75, 23))
@@ -140,7 +140,7 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         font.setBold(True)
         font.setWeight(75)
         self.pushButton_START_2.setFont(font)
-        self.pushButton_START_2.setStyleSheet("background-color: rgb(0, 255, 0);")
+        self.pushButton_START_2.setStyleSheet("background-color: rgb(190, 190, 190);")
         self.pushButton_START_2.setObjectName("pushButton_START_2")
         self.parametr_temp_vozdyha = QtWidgets.QLabel(self.centralwidget)
         self.parametr_temp_vozdyha.setGeometry(QtCore.QRect(370, 530, 131, 21))
@@ -172,7 +172,7 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         font.setUnderline(False)
         font.setWeight(75)
         self.pushButton_STOP.setFont(font)
-        self.pushButton_STOP.setStyleSheet("background-color: rgb(255, 85, 0);")
+        self.pushButton_STOP.setStyleSheet("background-color: rgb(190, 190, 190);")
         self.pushButton_STOP.setObjectName("pushButton_STOP")
         self.pushButton_START = QtWidgets.QPushButton(self.centralwidget)
         self.pushButton_START.setGeometry(QtCore.QRect(270, 10, 81, 41))
@@ -180,7 +180,7 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         font.setBold(True)
         font.setWeight(75)
         self.pushButton_START.setFont(font)
-        self.pushButton_START.setStyleSheet("background-color: rgb(252, 234, 255);")
+        self.pushButton_START.setStyleSheet("background-color: rgb(190, 190, 190);")
         self.pushButton_START.setObjectName("pushButton_START")
         self.groupBox_stakan1 = QtWidgets.QGroupBox(self.centralwidget)
         self.groupBox_stakan1.setGeometry(QtCore.QRect(160, 90, 151, 411))
@@ -736,15 +736,17 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
 
 
         # запуск потока на активацию кнопки
-        self.start_active = Thread_start(11)
+        self.start_active = Thread_start()
         self.start_active.mysignal.connect(self.start_stend, QtCore.Qt.QueuedConnection)
         self.start_active.start()
 
         # запуск системы кнопкой ПУСК
         self.pushButton_START.clicked.connect(self.zapros_vkl)
-        self.start_active_2 = Thread_start(22)
+        self.start_active_2 = Thread_start()
         self.start_active_2.mysignal.connect(self.start_stend_2, QtCore.Qt.QueuedConnection)
 
+        # остановка системы СТОП
+        self.pushButton_STOP.clicked.connect(self.stop)
 
 
         # запуск потоков start stop стаканов
@@ -769,21 +771,50 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
 
     def zapros_vkl(self):
         self.pushButton_START.setDisabled(True)
-        self.pushButton_START.setStyleSheet("background-color: rgb(197, 255, 161);")
-        work_with_db.messege_db_na_start(0)
+        self.pushButton_START.setStyleSheet("background-color: rgb(255, 255, 0);")
+        work_with_db.messege_to_functh_db(1)
         self.start_active_2.start()
 
         wer = threading.Thread(target=work_with_db.opros_db)
         wer.start()
 
-
     def start_stend_2(self, ert):
         if ert != '0':
-            self.pushButton_START.setStyleSheet("background-color: rgb(0, 255, 0);")
+            self.pushButton_START.setStyleSheet("background-color: rgb(190, 190, 190);")
+            self.pushButton_START_1.setStyleSheet("background-color: rgb(85, 255, 0);")
+            self.pushButton_START_2.setStyleSheet("background-color: rgb(85, 255, 0);")
+            self.pushButton_STOP.setStyleSheet("background-color: rgb(255, 0, 0);")
+            self.pushButton_STOP.setDisabled(False)
             self.pushButton_START_1.setDisabled(False)
             self.pushButton_START_2.setDisabled(False)
-            self.pushButton_STOP.setDisabled(True)
 
+    def stop(self):
+        self.pushButton_STOP.setStyleSheet("background-color: rgb(255, 255, 0);")
+        self.pushButton_STOP.setDisabled(True)
+        self.pushButton_START_1.setDisabled(True)
+        self.pushButton_START_2.setDisabled(True)
+        self.pushButton_STOP.setDisabled(True)
+        self.pushButton_STOP_1.setDisabled(True)
+        self.pushButton_STOP_2.setDisabled(True)
+        self.pushButton.setDisabled(True)
+        self.pushButton_2.setDisabled(True)
+        work_with_db.messege_to_functh_db(0)
+
+        if self.thread_1.isRunning():
+            potok_1 = threading.Thread(target=self.stop_st_1)
+            potok_1.start()
+        if self.thread_2.isRunning():
+            potok_2 = threading.Thread(target=self.stop_st_2)
+            potok_2.start()
+        time.sleep(2)
+
+        self.pushButton_START_1.setStyleSheet("background-color: rgb(190, 190, 190);")
+        self.pushButton_START_2.setStyleSheet("background-color: rgb(190, 190, 190);")
+        self.pushButton_START_1.setDisabled(True)
+        self.pushButton_START_2.setDisabled(True)
+        self.pushButton_START.setDisabled(False)
+        self.pushButton_START.setStyleSheet("background-color: rgb(85, 255, 0);")
+        self.pushButton_STOP.setStyleSheet("background-color: rgb(190, 190, 190);")
 
 
 
@@ -800,11 +831,23 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
 
 
     def start_1(self):
+        self.pushButton_START_1.setDisabled(True)
+        potok_messege_to_fundb = threading.Thread(target=self.start_st_1)
+        potok_messege_to_fundb.start()
+
+
+    def start_st_1(self):
+        self.pushButton_START_1.setStyleSheet("background-color: rgb(255, 255, 0);")
+        work_with_db.messege_to_functh_db(11)
         if not self.thread_1.isRunning():
             self.thread_1.start()
             self.thread_0.start()
+        self.pushButton_START_1.setStyleSheet("background-color: rgb(190, 190, 190);")
         self.pushButton_STOP_1.setDisabled(False)
-        self.pushButton_START_1.setDisabled(True)
+        self.pushButton_STOP_1.setStyleSheet("background-color: rgb(255, 0, 0);")
+        self.pushButton.setDisabled(False)
+
+
 
     def charg_0(self, s):
         self.parametr_temp_vozdyha.setText(s[0])
@@ -823,11 +866,15 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         self.parametr_temperVanni_1.setText(s[8])
         self.parametr_temperSredi_1.setText(s[9])
 
-
-
-
     def stop_1(self):
+        potok_messege_to_fundb = threading.Thread(target=self.stop_st_1)
+        potok_messege_to_fundb.start()
+    def stop_st_1(self):
+        self.pushButton_STOP_1.setStyleSheet("background-color: rgb(255, 255, 0);")
+        self.pushButton_STOP_1.setDisabled(True)
         self.thread_1.flag = False
+        self.thread_0.flag = False
+        work_with_db.messege_to_functh_db(10)
         self.parametr_DO2_V1.setText('')
         self.parametr_CO2_V1.setText('')
         self.parametr_pH_V1.setText('')
@@ -838,19 +885,32 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         self.parametr_oboroti_1.setText('')
         self.parametr_temperVanni_1.setText('')
         self.parametr_temperSredi_1.setText('')
-        self.thread_0.flag = False
         self.parametr_temp_vozdyha.setText('')
         self.parametr_temp_radiatora.setText('')
-
-        time.sleep(3)
-        self.pushButton_STOP_1.setDisabled(True)
+        time.sleep(1)
+        self.pushButton_STOP_1.setStyleSheet("background-color: rgb(190, 190, 190);")
+        self.pushButton_START_1.setStyleSheet("background-color: rgb(85, 255, 0);")
         self.pushButton_START_1.setDisabled(False)
 
+
+
     def start_2(self):
+        self.pushButton_START_2.setDisabled(True)
+        potok_messege_to_fundb = threading.Thread(target=self.start_st_2)
+        potok_messege_to_fundb.start()
+
+
+    def start_st_2(self):
+        self.pushButton_START_2.setStyleSheet("background-color: rgb(255, 255, 0);")
+        work_with_db.messege_to_functh_db(21)
         if not self.thread_2.isRunning():
             self.thread_2.start()
+        self.pushButton_START_2.setStyleSheet("background-color: rgb(190, 190, 190);")
         self.pushButton_STOP_2.setDisabled(False)
-        self.pushButton_START_2.setDisabled(True)
+        self.pushButton_STOP_2.setStyleSheet("background-color: rgb(255, 0, 0);")
+        self.pushButton_2.setDisabled(False)
+
+
 
     def charg_2(self, s):
         self.parametr_DO2_V2.setText(s[0])
@@ -865,9 +925,17 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         self.parametr_temperSredi_2.setText(s[9])
 
 
-
     def stop_2(self):
+
+        potok_messege_to_fundb = threading.Thread(target=self.stop_st_2)
+        potok_messege_to_fundb.start()
+
+
+    def stop_st_2(self):
+        self.pushButton_STOP_2.setStyleSheet("background-color: rgb(255, 255, 0);")
+        self.pushButton_STOP_2.setDisabled(True)
         self.thread_2.flag = False
+        work_with_db.messege_to_functh_db(20)
         self.parametr_DO2_V2.setText('')
         self.parametr_CO2_V2.setText('')
         self.parametr_pH_V2.setText('')
@@ -878,10 +946,13 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         self.parametr_oboroti_2.setText('')
         self.parametr_temperVanni_2.setText('')
         self.parametr_temperSredi_2.setText('')
-
-        self.pushButton_STOP_2.setDisabled(True)
-        time.sleep(3)
+        time.sleep(1)
+        self.pushButton_STOP_2.setStyleSheet("background-color: rgb(190, 190, 190);")
+        self.pushButton_START_2.setStyleSheet("background-color: rgb(85, 255, 0);")
         self.pushButton_START_2.setDisabled(False)
+        print (2)
+
+
 
     def closeEvent(self, event): # Закрытие потоков при закрытии окна
         self.hide()
